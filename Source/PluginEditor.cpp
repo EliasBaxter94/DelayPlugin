@@ -28,6 +28,7 @@ DelayPluginAudioProcessorEditor::DelayPluginAudioProcessorEditor (DelayPluginAud
     delayTimeSlider.setTextValueSuffix (" Delay Time (ms)");
     delayTimeSlider.setValue(0.0);
 
+    //TODO: Switch this to a value tree state slider connector
     //delayTimeSlider.onValueChange = [this] {setDelayTimeSlider();};
 
     addAndMakeVisible(&delayTimeSlider);
