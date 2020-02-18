@@ -28,7 +28,7 @@ DelayPluginAudioProcessor::DelayPluginAudioProcessor()
     #endif
     , parameters(*this, nullptr, "PARAMETERS",
       {
-        std::make_unique<AudioParameterInt>("", "", 0, 500, 1000)
+        std::make_unique<AudioParameterInt>(DelayTimeParamID, "", 0, 500, 1000)
       })
 {
 
@@ -209,9 +209,9 @@ void DelayPluginAudioProcessor::fillDelayBuffer(int channel, const int bufferLen
 
 void DelayPluginAudioProcessor::getFromDelayBuffer (AudioBuffer<float>& buffer, int channel, const int bufferLength, const int delayBufferLength, const float* bufferData, const float* delayBufferData)
 {
-    //const int readPosition = static_cast<int> (delayBufferLength + mWritePosition - (mSampleRate * delayTime->get() / 1000)) % delayBufferLength;
+    const float delayTime = *parameters.getRawParameterValue(DelayTimeParamID);
+    const int   readPosition = static_cast<int> (delayBufferLength + mWritePosition - (mSampleRate * delayTime / 1000)) % delayBufferLength;
 
-    const int readPosition =0;
     if (delayBufferLength > bufferLength + readPosition)
     {
         buffer.copyFrom(channel, 0, delayBufferData + readPosition, bufferLength);

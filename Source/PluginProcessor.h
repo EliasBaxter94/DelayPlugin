@@ -68,6 +68,8 @@ public:
     void feedbackDelay(int channel, const int bufferLength, const int delayBufferLength, float* dryBuffer);
 
     //AudioParameterInt &getDelayTimeParameter() { return delayTime; }
+
+    static constexpr auto DelayTimeParamID = "DelayTime";
     //===========================================================================================================================================================================
 
     AudioProcessorValueTreeState parameters;
