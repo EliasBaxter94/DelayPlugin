@@ -12,8 +12,8 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-DelayPluginAudioProcessorEditor::DelayPluginAudioProcessorEditor (DelayPluginAudioProcessor& p)
-    : AudioProcessorEditor (&p), processor (p)
+DelayPluginAudioProcessorEditor::DelayPluginAudioProcessorEditor (DelayPluginAudioProcessor& parent, AudioProcessorValueTreeState& vts)
+    : AudioProcessorEditor (parent), processor (parent), valueTreeState (vts)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
@@ -28,10 +28,18 @@ DelayPluginAudioProcessorEditor::DelayPluginAudioProcessorEditor (DelayPluginAud
     delayTimeSlider.setTextValueSuffix (" Delay Time (ms)");
     delayTimeSlider.setValue(0.0);
 
+    delayDryWetSlider.setSliderStyle(Slider::RotaryVerticalDrag);
+    delayDryWetSlider.setRange(0.0, 1.0, 0.5);
+    delayDryWetSlider.setTextBoxStyle(Slider::NoTextBox, false, 90, 0);
+    delayDryWetSlider.setPopupDisplayEnabled(true, false, this);
+    delayDryWetSlider.setTextValueSuffix("Delay Time (Dry/Wet");
+    delayDryWetSlider.setValue(0.0);
+
     //TODO: Switch this to a value tree state slider connector
     //delayTimeSlider.onValueChange = [this] {setDelayTimeSlider();};
 
     addAndMakeVisible(&delayTimeSlider);
+    addAndMakeVisible(&delayDryWetSlider);
 }
 
 DelayPluginAudioProcessorEditor::~DelayPluginAudioProcessorEditor()
@@ -58,6 +66,7 @@ void DelayPluginAudioProcessorEditor::resized()
             .withX(getLocalBounds().getCentreX() - (width / 2));
 
     delayTimeSlider.setBounds(bounds);
+    delayDryWetSlider.setBounds(bounds * 0.75);
 
 }
 

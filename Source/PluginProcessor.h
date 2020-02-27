@@ -70,6 +70,7 @@ public:
     //AudioParameterInt &getDelayTimeParameter() { return delayTime; }
 
     static constexpr auto DelayTimeParamID = "DelayTime";
+    static constexpr auto DelayTimeDryWetID = "DelayDryWet";
     //===========================================================================================================================================================================
 
     AudioProcessorValueTreeState parameters;
@@ -81,6 +82,7 @@ private:
 
 
     std::atomic<int>* delayTimeParameter  = nullptr;
+    std::atomic<float>* delayTimeDryWetParameter = nullptr;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DelayPluginAudioProcessor)
 };

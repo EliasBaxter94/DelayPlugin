@@ -26,7 +26,7 @@ public:
 
 
 
-    DelayPluginAudioProcessorEditor (DelayPluginAudioProcessor&);
+    DelayPluginAudioProcessorEditor (DelayPluginAudioProcessor& parent, AudioProcessorValueTreeState& vts);
     ~DelayPluginAudioProcessorEditor();
 
     //==============================================================================
@@ -38,7 +38,11 @@ private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     DelayPluginAudioProcessor& processor;
+    AudioProcessorValueTreeState& valueTreeState;
     Slider                     delayTimeSlider;
+    Slider                     delayDryWetSlider;
+
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> delayTimeAttachment;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DelayPluginAudioProcessorEditor)
 };

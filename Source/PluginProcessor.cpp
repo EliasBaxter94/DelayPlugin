@@ -28,7 +28,10 @@ DelayPluginAudioProcessor::DelayPluginAudioProcessor()
     #endif
     , parameters(*this, nullptr, "PARAMETERS",
       {
-        std::make_unique<AudioParameterInt>(DelayTimeParamID, "", 0, 500, 1000)
+        std::make_unique<AudioParameterInt>(DelayTimeParamID, "delayTime", 0, 500, 1000),
+
+        std::make_unique<AudioParameterFloat>(DelayTimeDryWetID, "delayDryWet", 0.0, 0.5, 1.0)
+
       })
 {
 
@@ -212,16 +215,19 @@ void DelayPluginAudioProcessor::getFromDelayBuffer (AudioBuffer<float>& buffer, 
     const float delayTime = *parameters.getRawParameterValue(DelayTimeParamID);
     const int   readPosition = static_cast<int> (delayBufferLength + mWritePosition - (mSampleRate * delayTime / 1000)) % delayBufferLength;
 
+    float wetGain = 0.2f;
     if (delayBufferLength > bufferLength + readPosition)
     {
-        buffer.copyFrom(channel, 0, delayBufferData + readPosition, bufferLength);
+        buffer.addFrom(channel, 0, delayBufferData + readPosition, bufferLength, wetGain);
     }
     else {
         const int bufferRemaining = delayBufferLength - readPosition;
-        buffer.copyFrom(channel, 0, delayBufferData + readPosition, bufferRemaining);
-        buffer.copyFrom(channel, bufferRemaining, delayBufferData, bufferLength - bufferRemaining);
+        buffer.addFrom(channel, 0, delayBufferData + readPosition, bufferRemaining, wetGain);
+        buffer.addFrom(channel, bufferRemaining, delayBufferData, bufferLength - bufferRemaining, wetGain);
     }
-    
+
+    //TODO: might want to normalise buffer at this point
+
     
 }
 
@@ -249,7 +255,7 @@ bool DelayPluginAudioProcessor::hasEditor() const
 
 AudioProcessorEditor* DelayPluginAudioProcessor::createEditor()
 {
-    return new DelayPluginAudioProcessorEditor (*this);
+    return new DelayPluginAudioProcessorEditor (*this, parameters);
 }
 
 //==============================================================================
