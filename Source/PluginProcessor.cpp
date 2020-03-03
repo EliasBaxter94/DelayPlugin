@@ -28,9 +28,9 @@ DelayPluginAudioProcessor::DelayPluginAudioProcessor()
     #endif
     , parameters(*this, nullptr, "PARAMETERS",
       {
-        std::make_unique<AudioParameterInt>(DelayTimeParamID, "delayTime", 0, 500, 1000),
+        std::make_unique<AudioParameterInt>(DelayTimeParamID, "delayTime", 0, 1000, 500),
 
-        std::make_unique<AudioParameterFloat>(DelayTimeDryWetID, "delayDryWet", 0.0, 0.5, 1.0)
+        std::make_unique<AudioParameterFloat>(DelayTimeDryWetID, "delayDryWet", 0.0, 1.0, 0.2)
 
       })
 {
@@ -215,7 +215,8 @@ void DelayPluginAudioProcessor::getFromDelayBuffer (AudioBuffer<float>& buffer, 
     const float delayTime = *parameters.getRawParameterValue(DelayTimeParamID);
     const int   readPosition = static_cast<int> (delayBufferLength + mWritePosition - (mSampleRate * delayTime / 1000)) % delayBufferLength;
 
-    float wetGain = 0.2f;
+    const float wetGain = *parameters.getRawParameterValue(DelayTimeDryWetID);
+    //float wetGain = 0.2f;
     if (delayBufferLength > bufferLength + readPosition)
     {
         buffer.addFrom(channel, 0, delayBufferData + readPosition, bufferLength, wetGain);

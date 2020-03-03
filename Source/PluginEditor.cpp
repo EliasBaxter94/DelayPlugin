@@ -21,25 +21,29 @@ DelayPluginAudioProcessorEditor::DelayPluginAudioProcessorEditor (DelayPluginAud
 
     setSize (200, 400);
 
-    delayTimeSlider.setSliderStyle(Slider::RotaryVerticalDrag);
-    delayTimeSlider.setRange(0.0, 1000.0, 1);
-    delayTimeSlider.setTextBoxStyle(Slider::NoTextBox, false, 90, 0);
-    delayTimeSlider.setPopupDisplayEnabled(true, false, this);
-    delayTimeSlider.setTextValueSuffix (" Delay Time (ms)");
-    delayTimeSlider.setValue(0.0);
+//    delayTimeSlider.setSliderStyle(Slider::RotaryVerticalDrag);
+//    delayTimeSlider.setRange(0.0, 1000.0, 1);
+//    delayTimeSlider.setTextBoxStyle(Slider::NoTextBox, false, 90, 0);
+//    //delayTimeSlider.setPopupDisplayEnabled(true, false, this);
+//    delayTimeSlider.setTextValueSuffix (" Delay Time (ms)");
+//    delayTimeSlider.setValue(0.0);
 
-    delayDryWetSlider.setSliderStyle(Slider::RotaryVerticalDrag);
-    delayDryWetSlider.setRange(0.0, 1.0, 0.5);
-    delayDryWetSlider.setTextBoxStyle(Slider::NoTextBox, false, 90, 0);
-    delayDryWetSlider.setPopupDisplayEnabled(true, false, this);
-    delayDryWetSlider.setTextValueSuffix("Delay Time (Dry/Wet");
-    delayDryWetSlider.setValue(0.0);
+//    delayDryWetSlider.setSliderStyle(Slider::RotaryVerticalDrag);
+//    delayDryWetSlider.setRange(0.0, 1.0, 0.5);
+//    delayDryWetSlider.setTextBoxStyle(Slider::NoTextBox, false, 90, 0);
+//    delayDryWetSlider.setPopupDisplayEnabled(true, false, this);
+//    delayDryWetSlider.setTextValueSuffix("Delay Time (Dry/Wet");
+//    delayDryWetSlider.setValue(0.0);
 
     //TODO: Switch this to a value tree state slider connector
     //delayTimeSlider.onValueChange = [this] {setDelayTimeSlider();};
 
-    addAndMakeVisible(&delayTimeSlider);
+    addAndMakeVisible(delayTimeSlider);
+    delayTimeAttachment.reset(new AudioProcessorValueTreeState::SliderAttachment(valueTreeState, DelayPluginAudioProcessor::DelayTimeParamID, delayTimeSlider));
+
+
     addAndMakeVisible(&delayDryWetSlider);
+    delayTimeDryWetAttachment.reset(new AudioProcessorValueTreeState::SliderAttachment( valueTreeState, DelayPluginAudioProcessor::DelayTimeDryWetID,delayDryWetSlider));
 }
 
 DelayPluginAudioProcessorEditor::~DelayPluginAudioProcessorEditor()
