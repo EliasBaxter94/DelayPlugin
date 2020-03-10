@@ -11,6 +11,7 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
+
 //==============================================================================
 DelayPluginAudioProcessorEditor::DelayPluginAudioProcessorEditor (DelayPluginAudioProcessor& parent, AudioProcessorValueTreeState& vts)
     : AudioProcessorEditor (parent), processor (parent), valueTreeState (vts)
@@ -20,19 +21,17 @@ DelayPluginAudioProcessorEditor::DelayPluginAudioProcessorEditor (DelayPluginAud
 
 
     setSize (200, 400);
+    setLookAndFeel(&customisedLookAndFeel);
 
-//    delayTimeSlider.setSliderStyle(Slider::RotaryVerticalDrag);
-//    delayTimeSlider.setRange(0.0, 1000.0, 1);
-//    delayTimeSlider.setTextBoxStyle(Slider::NoTextBox, false, 90, 0);
-//    //delayTimeSlider.setPopupDisplayEnabled(true, false, this);
-//    delayTimeSlider.setTextValueSuffix (" Delay Time (ms)");
-//    delayTimeSlider.setValue(0.0);
+    delayTimeSlider.setSliderStyle(Slider::Rotary);
+    delayTimeSlider.setTextBoxStyle(Slider::NoTextBox, false, 90, 0);
+    delayTimeSlider.setPopupDisplayEnabled(true, false, this);
+    delayTimeSlider.setTextValueSuffix (" Delay Time (ms)");
 
-//    delayDryWetSlider.setSliderStyle(Slider::RotaryVerticalDrag);
-//    delayDryWetSlider.setRange(0.0, 1.0, 0.5);
-//    delayDryWetSlider.setTextBoxStyle(Slider::NoTextBox, false, 90, 0);
-//    delayDryWetSlider.setPopupDisplayEnabled(true, false, this);
-//    delayDryWetSlider.setTextValueSuffix("Delay Time (Dry/Wet");
+    delayDryWetSlider.setSliderStyle(Slider::Rotary);
+    delayDryWetSlider.setTextBoxStyle(Slider::NoTextBox, false, 90, 0);
+    delayDryWetSlider.setPopupDisplayEnabled(true, false, this);
+    delayDryWetSlider.setTextValueSuffix("Delay Time (Dry/Wet");
 //    delayDryWetSlider.setValue(0.0);
 
     //TODO: Switch this to a value tree state slider connector
@@ -48,6 +47,7 @@ DelayPluginAudioProcessorEditor::DelayPluginAudioProcessorEditor (DelayPluginAud
 
 DelayPluginAudioProcessorEditor::~DelayPluginAudioProcessorEditor()
 {
+    setLookAndFeel(nullptr);
 }
 
 //==============================================================================

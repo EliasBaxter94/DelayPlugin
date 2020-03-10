@@ -181,6 +181,7 @@ void DelayPluginAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBu
         float* dryBuffer = buffer.getWritePointer(channel);
         
         fillDelayBuffer(channel, bufferLength, delayBufferLength, bufferData, delayBufferData);
+        //buffer.applyGain(drySignalGain);
         getFromDelayBuffer(buffer, channel, bufferLength, delayBufferLength, bufferData, delayBufferData);
         feedbackDelay(channel, bufferLength, delayBufferLength, dryBuffer);
     }

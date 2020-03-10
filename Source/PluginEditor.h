@@ -12,6 +12,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
+#include "CustomLookAndFeel.h"
 
 //==============================================================================
 /**
@@ -37,10 +38,11 @@ public:
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
-    DelayPluginAudioProcessor& processor;
-    AudioProcessorValueTreeState& valueTreeState;
-    Slider                     delayTimeSlider;
-    Slider                     delayDryWetSlider;
+    DelayPluginAudioProcessor&      processor;
+    AudioProcessorValueTreeState&   valueTreeState;
+    Slider                          delayTimeSlider;
+    Slider                          delayDryWetSlider;
+    CustomisedLookAndFeel           customisedLookAndFeel;
 
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> delayTimeAttachment;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> delayTimeDryWetAttachment;
