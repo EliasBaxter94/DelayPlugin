@@ -28,7 +28,10 @@ DelayPluginAudioProcessor::DelayPluginAudioProcessor()
     #endif
     , parameters(*this, nullptr, "PARAMETERS",
       {
-        std::make_unique<AudioParameterInt>("", "", 0, 500, 1000)
+        std::make_unique<AudioParameterInt>(DelayTimeParamID, "delayTime", 0, 1000, 500),
+
+        std::make_unique<AudioParameterFloat>(DelayTimeDryWetID, "delayDryWet", 0.0, 1.0, 0.2)
+
       })
 {
 
@@ -209,19 +212,23 @@ void DelayPluginAudioProcessor::fillDelayBuffer(int channel, const int bufferLen
 
 void DelayPluginAudioProcessor::getFromDelayBuffer (AudioBuffer<float>& buffer, int channel, const int bufferLength, const int delayBufferLength, const float* bufferData, const float* delayBufferData)
 {
-    //const int readPosition = static_cast<int> (delayBufferLength + mWritePosition - (mSampleRate * delayTime->get() / 1000)) % delayBufferLength;
+    const float delayTime = *parameters.getRawParameterValue(DelayTimeParamID);
+    const int   readPosition = static_cast<int> (delayBufferLength + mWritePosition - (mSampleRate * delayTime / 1000)) % delayBufferLength;
 
-    const int readPosition =0;
+    const float wetGain = *parameters.getRawParameterValue(DelayTimeDryWetID);
+    //float wetGain = 0.2f;
     if (delayBufferLength > bufferLength + readPosition)
     {
-        buffer.copyFrom(channel, 0, delayBufferData + readPosition, bufferLength);
+        buffer.addFrom(channel, 0, delayBufferData + readPosition, bufferLength, wetGain);
     }
     else {
         const int bufferRemaining = delayBufferLength - readPosition;
-        buffer.copyFrom(channel, 0, delayBufferData + readPosition, bufferRemaining);
-        buffer.copyFrom(channel, bufferRemaining, delayBufferData, bufferLength - bufferRemaining);
+        buffer.addFrom(channel, 0, delayBufferData + readPosition, bufferRemaining, wetGain);
+        buffer.addFrom(channel, bufferRemaining, delayBufferData, bufferLength - bufferRemaining, wetGain);
     }
-    
+
+    //TODO: might want to normalise buffer at this point
+
     
 }
 
@@ -249,7 +256,7 @@ bool DelayPluginAudioProcessor::hasEditor() const
 
 AudioProcessorEditor* DelayPluginAudioProcessor::createEditor()
 {
-    return new DelayPluginAudioProcessorEditor (*this);
+    return new DelayPluginAudioProcessorEditor (*this, parameters);
 }
 
 //==============================================================================
