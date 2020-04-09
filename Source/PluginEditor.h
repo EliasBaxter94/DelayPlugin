@@ -33,7 +33,8 @@ public:
     //==============================================================================
     void paint (Graphics&) override;
     void resized() override;
-    //void setDelayTimeSlider ();
+
+
 
 private:
     // This reference is provided as a quick way for your editor to
@@ -43,6 +44,9 @@ private:
     Slider                          delayTimeSlider;
     Slider                          delayDryWetSlider;
     CustomisedLookAndFeel           customisedLookAndFeel;
+    OwnedArray<Slider>              knobs;
+
+
 
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> delayTimeAttachment;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> delayTimeDryWetAttachment;

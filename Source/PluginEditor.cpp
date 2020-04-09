@@ -45,10 +45,15 @@ DelayPluginAudioProcessorEditor::DelayPluginAudioProcessorEditor (DelayPluginAud
     delayTimeDryWetAttachment.reset(new AudioProcessorValueTreeState::SliderAttachment( valueTreeState, DelayPluginAudioProcessor::DelayTimeDryWetID,delayDryWetSlider));
 }
 
+
+
 DelayPluginAudioProcessorEditor::~DelayPluginAudioProcessorEditor()
 {
     setLookAndFeel(nullptr);
 }
+
+
+
 
 //==============================================================================
 void DelayPluginAudioProcessorEditor::paint (Graphics& g)
@@ -62,15 +67,21 @@ void DelayPluginAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
-    auto width  = 100;
-    auto bounds = getLocalBounds().withTop(getLocalBounds()
-            .getCentreY())
-            .withBottom(getHeight()*0.75)
-            .withWidth(width)
-            .withX(getLocalBounds().getCentreX() - (width / 2));
+    FlexBox                  knobBox;
+    knobBox.flexWrap       = FlexBox::Wrap::wrap;
+    knobBox.justifyContent = FlexBox::JustifyContent::center;
+    knobBox.alignContent   = FlexBox::AlignContent::center;
+    knobBox.flexDirection  = FlexBox::Direction::column;
 
-    delayTimeSlider.setBounds(bounds);
-    delayDryWetSlider.setBounds(bounds * 0.75);
+    knobs.add(&delayTimeSlider); // i think the way ive added these objects to the array is causing a crash on shutdown.
+    knobs.add(&delayDryWetSlider);
+
+    for (auto* k : knobs)
+        knobBox.items.add (FlexItem (*k).withMinWidth(75.0f).withMinHeight(75.0f));
+
+        knobBox.performLayout(getLocalBounds().toFloat());
+
 
 }
+
 
