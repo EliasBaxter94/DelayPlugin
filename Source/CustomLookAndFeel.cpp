@@ -82,7 +82,6 @@ void CustomisedLookAndFeel::drawRotarySlider (Graphics& g, int x, int y, int wid
         else
             g.setColour (Colour (0x80808080));
 
-
         Path outlineArc;
         outlineArc.addPieSegment (rx, ry, rw, rw, rotaryStartAngle, rotaryEndAngle, thickness);
 

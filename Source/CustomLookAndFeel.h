@@ -18,7 +18,6 @@ class CustomisedLookAndFeel : public LookAndFeel_V4
     public:
         CustomisedLookAndFeel();
         int getSliderThumbRadius(Slider &slider) override;
-
         void drawRotarySlider (Graphics&, int x, int y, int width, int height,
             float sliderPosProportional, float rotaryStartAngle, float rotaryEndAngle,
             Slider&) override;

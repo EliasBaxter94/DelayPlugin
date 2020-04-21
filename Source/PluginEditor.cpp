@@ -7,10 +7,8 @@
 
   ==============================================================================
 */
-
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-
 
 //==============================================================================
 DelayPluginAudioProcessorEditor::DelayPluginAudioProcessorEditor (DelayPluginAudioProcessor& parent, AudioProcessorValueTreeState& vts)
@@ -18,8 +16,6 @@ DelayPluginAudioProcessorEditor::DelayPluginAudioProcessorEditor (DelayPluginAud
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-
-
     setSize (200, 400);
     setLookAndFeel(&customisedLookAndFeel);
 
@@ -32,35 +28,23 @@ DelayPluginAudioProcessorEditor::DelayPluginAudioProcessorEditor (DelayPluginAud
     delayDryWetSlider.setTextBoxStyle(Slider::NoTextBox, false, 90, 0);
     delayDryWetSlider.setPopupDisplayEnabled(true, false, this);
     delayDryWetSlider.setTextValueSuffix("Delay Time (Dry/Wet");
-//    delayDryWetSlider.setValue(0.0);
-
-    //TODO: Switch this to a value tree state slider connector
-    //delayTimeSlider.onValueChange = [this] {setDelayTimeSlider();};
 
     addAndMakeVisible(delayTimeSlider);
     delayTimeAttachment.reset(new AudioProcessorValueTreeState::SliderAttachment(valueTreeState, DelayPluginAudioProcessor::DelayTimeParamID, delayTimeSlider));
 
-
     addAndMakeVisible(&delayDryWetSlider);
     delayTimeDryWetAttachment.reset(new AudioProcessorValueTreeState::SliderAttachment( valueTreeState, DelayPluginAudioProcessor::DelayTimeDryWetID,delayDryWetSlider));
 }
-
-
-
+//==============================================================================
 DelayPluginAudioProcessorEditor::~DelayPluginAudioProcessorEditor()
 {
     setLookAndFeel(nullptr);
 }
-
-
-
-
 //==============================================================================
 void DelayPluginAudioProcessorEditor::paint (Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
-
 }
 
 void DelayPluginAudioProcessorEditor::resized()
@@ -78,10 +62,7 @@ void DelayPluginAudioProcessorEditor::resized()
 
     for (auto* k : knobs)
         knobBox.items.add (FlexItem (*k).withMinWidth(75.0f).withMinHeight(75.0f));
-
         knobBox.performLayout(getLocalBounds().toFloat());
-
-
 }
 
 
