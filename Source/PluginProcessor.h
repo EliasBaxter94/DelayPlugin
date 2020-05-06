@@ -15,7 +15,6 @@
 
 
 //==============================================================================
-class make_unique;
 
 /**
 */
@@ -81,6 +80,7 @@ private:
     int mSampleRate {44100};
 
 
+    //TODO: Remove?
     std::atomic<int>* delayTimeParameter  = nullptr;
     std::atomic<float>* delayTimeDryWetParameter = nullptr;
     //==============================================================================
