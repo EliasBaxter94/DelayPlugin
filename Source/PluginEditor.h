@@ -33,10 +33,11 @@ private:
     // access the processor object that created it.
     DelayPluginAudioProcessor&      processor;
     AudioProcessorValueTreeState&   valueTreeState;
-    Slider                          delayTimeSlider;
-    Slider                          delayDryWetSlider;
+    Slider                          *delayTimeSlider;
+    Slider                          *delayDryWetSlider;
     CustomisedLookAndFeel           customisedLookAndFeel;
     OwnedArray<Slider>              knobs;
+
 
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> delayTimeAttachment;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> delayTimeDryWetAttachment;
