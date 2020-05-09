@@ -29,9 +29,7 @@ DelayPluginAudioProcessor::DelayPluginAudioProcessor()
     , parameters(*this, nullptr, "PARAMETERS",
       {
         std::make_unique<AudioParameterInt>(DelayTimeParamID, "delayTime", 0, 1000, 500),
-
         std::make_unique<AudioParameterFloat>(DelayTimeDryWetID, "delayDryWet", 0.0, 1.0, 0.2)
-
       })
 {
 
@@ -41,8 +39,6 @@ DelayPluginAudioProcessor::~DelayPluginAudioProcessor()
 {
 
 }
-
-//============================================================================
 
 //==============================================================================
 const String DelayPluginAudioProcessor::getName() const
@@ -181,6 +177,7 @@ void DelayPluginAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBu
         float* dryBuffer = buffer.getWritePointer(channel);
         
         fillDelayBuffer(channel, bufferLength, delayBufferLength, bufferData, delayBufferData);
+        //buffer.applyGain(drySignalGain);
         getFromDelayBuffer(buffer, channel, bufferLength, delayBufferLength, bufferData, delayBufferData);
         feedbackDelay(channel, bufferLength, delayBufferLength, dryBuffer);
     }
@@ -213,23 +210,22 @@ void DelayPluginAudioProcessor::fillDelayBuffer(int channel, const int bufferLen
 void DelayPluginAudioProcessor::getFromDelayBuffer (AudioBuffer<float>& buffer, int channel, const int bufferLength, const int delayBufferLength, const float* bufferData, const float* delayBufferData)
 {
     const float delayTime = *parameters.getRawParameterValue(DelayTimeParamID);
-    const int   readPosition = static_cast<int> (delayBufferLength + mWritePosition - (mSampleRate * delayTime / 1000)) % delayBufferLength;
+    const float wetGain   = *parameters.getRawParameterValue(DelayTimeDryWetID);
 
-    const float wetGain = *parameters.getRawParameterValue(DelayTimeDryWetID);
-    //float wetGain = 0.2f;
+    const int readPosition = static_cast<int> (delayBufferLength + mWritePosition - (mSampleRate * delayTime / 1000)) % delayBufferLength;
+
     if (delayBufferLength > bufferLength + readPosition)
     {
         buffer.addFrom(channel, 0, delayBufferData + readPosition, bufferLength, wetGain);
     }
-    else {
+    else
+    {
         const int bufferRemaining = delayBufferLength - readPosition;
         buffer.addFrom(channel, 0, delayBufferData + readPosition, bufferRemaining, wetGain);
         buffer.addFrom(channel, bufferRemaining, delayBufferData, bufferLength - bufferRemaining, wetGain);
     }
 
     //TODO: might want to normalise buffer at this point
-
-    
 }
 
 void DelayPluginAudioProcessor::feedbackDelay (int channel, const int bufferLength, const int delayBufferLength, float* dryBuffer)
@@ -238,13 +234,13 @@ void DelayPluginAudioProcessor::feedbackDelay (int channel, const int bufferLeng
     {
         mDelayBuffer.addFromWithRamp(channel, mWritePosition, dryBuffer, bufferLength, 0.1, 0.1);
     }
-    else {
+    else
+    {
         const int bufferRemaining = delayBufferLength - mWritePosition;
 
         mDelayBuffer.addFromWithRamp(channel, bufferRemaining, dryBuffer, bufferRemaining, 0.1, 0.1);
         mDelayBuffer.addFromWithRamp(channel, 0, dryBuffer, bufferLength - bufferRemaining, 0.1, 0.1);
     }
-
 }
         
 

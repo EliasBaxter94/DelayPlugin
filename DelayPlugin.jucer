@@ -4,6 +4,10 @@
               cppLanguageStandard="17">
   <MAINGROUP id="pI93Jg" name="DelayPlugin">
     <GROUP id="{0BDF38DE-4823-F8E1-672B-6EAA4DBA9B0D}" name="Source">
+      <FILE id="QNexIo" name="CustomLookAndFeel.cpp" compile="1" resource="0"
+            file="Source/CustomLookAndFeel.cpp"/>
+      <FILE id="ZDWxRS" name="CustomLookAndFeel.h" compile="0" resource="0"
+            file="Source/CustomLookAndFeel.h"/>
       <FILE id="J7jV2e" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="VhPSyF" name="PluginProcessor.h" compile="0" resource="0"
