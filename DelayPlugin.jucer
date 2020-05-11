@@ -16,6 +16,10 @@
             file="Source/PluginEditor.cpp"/>
       <FILE id="a0qwBo" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
+    <FILE id="M4QoTM" name="BackgroundImage1.png" compile="0" resource="1"
+          file="../../Pictures/BackgroundImage1.png"/>
+    <FILE id="Oda2bC" name="BackgroundImage2.png" compile="0" resource="1"
+          file="../../Pictures/BackgroundImage2.png"/>
   </MAINGROUP>
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX">

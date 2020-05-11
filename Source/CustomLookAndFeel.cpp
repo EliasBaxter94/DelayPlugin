@@ -15,7 +15,7 @@ CustomisedLookAndFeel::CustomisedLookAndFeel()
 {
     setColour(Slider::thumbColourId, sliderColour);
     setColour(Slider::rotarySliderOutlineColourId, Colours::mediumpurple);
-    setColour(Slider::rotarySliderFillColourId, Colours::red);
+    setColour(Slider::rotarySliderFillColourId, Colours::black);
 }
 
 int CustomisedLookAndFeel::getSliderThumbRadius(Slider &slider)

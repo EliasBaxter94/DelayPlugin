@@ -78,7 +78,13 @@ DelayPluginAudioProcessorEditor::~DelayPluginAudioProcessorEditor()
 void DelayPluginAudioProcessorEditor::paint (Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
+    //Image background = ImageCache::getFromMemory (BinaryData::BackgroundImage1_png, BinaryData::BackgroundImage1_pngSize);
+    //g.drawImageAt (background, 0, 0);
+
+    Image background = ImageCache::getFromMemory (BinaryData::BackgroundImage2_png, BinaryData::BackgroundImage2_pngSize);
+    g.drawImageAt (background, 0, 0);
+
+    //g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
 }
 
 void DelayPluginAudioProcessorEditor::resized()
@@ -87,7 +93,7 @@ void DelayPluginAudioProcessorEditor::resized()
     // subcomponents in your editor..
     FlexBox                  knobBox;
     knobBox.flexWrap       = FlexBox::Wrap::wrap;
-    knobBox.justifyContent = FlexBox::JustifyContent::center;
+    knobBox.justifyContent = FlexBox::JustifyContent::spaceAround;
     knobBox.alignContent   = FlexBox::AlignContent::center;
     knobBox.flexDirection  = FlexBox::Direction::column;
 

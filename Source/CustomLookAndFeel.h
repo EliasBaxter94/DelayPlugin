@@ -23,6 +23,6 @@ class CustomisedLookAndFeel : public LookAndFeel_V4
             Slider&) override;
 
     private:
-        const Colour sliderColour { Colours::red };
+        const Colour sliderColour { Colours::black };
         const int newThumbRadius  { 10 };
 };
