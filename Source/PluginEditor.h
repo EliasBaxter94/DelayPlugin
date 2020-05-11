@@ -35,12 +35,14 @@ private:
     AudioProcessorValueTreeState&   valueTreeState;
     Slider                          *delayTimeSlider;
     Slider                          *delayDryWetSlider;
+    Slider                          *delayFeedBackSlider;
     CustomisedLookAndFeel           customisedLookAndFeel;
     OwnedArray<Slider>              knobs;
 
 
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> delayTimeAttachment;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> delayTimeDryWetAttachment;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> delayFeedBackAttachment;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DelayPluginAudioProcessorEditor)
 };

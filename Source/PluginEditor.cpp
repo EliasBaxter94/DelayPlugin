@@ -35,8 +35,10 @@ DelayPluginAudioProcessorEditor::DelayPluginAudioProcessorEditor (DelayPluginAud
 {
     setLookAndFeel(&customisedLookAndFeel);
 
-    knobs.add(delayTimeSlider = new Slider());
-    knobs.add(delayDryWetSlider = new Slider());
+    knobs.add(delayTimeSlider     = new Slider());
+    knobs.add(delayFeedBackSlider = new Slider());
+    knobs.add(delayDryWetSlider   = new Slider());
+
 
     delayTimeSlider->setSliderStyle(Slider::Rotary);
     delayTimeSlider->setTextBoxStyle(Slider::NoTextBox, false, 90, 0);
@@ -48,12 +50,19 @@ DelayPluginAudioProcessorEditor::DelayPluginAudioProcessorEditor (DelayPluginAud
     delayDryWetSlider->setPopupDisplayEnabled(true, false, this);
     delayDryWetSlider->setTextValueSuffix("Delay Time (Dry/Wet");
 
+    delayFeedBackSlider->setSliderStyle(Slider::Rotary);
+    delayFeedBackSlider->setTextBoxStyle(Slider::NoTextBox, false, 90, 0);
+    delayFeedBackSlider->setPopupDisplayEnabled(true, false, this);
+    delayFeedBackSlider->setTextValueSuffix("FeedBack");
+
     addAndMakeVisible(delayTimeSlider);
     delayTimeAttachment = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(valueTreeState, DelayPluginAudioProcessor::DelayTimeParamID, *delayTimeSlider);
 
     addAndMakeVisible(delayDryWetSlider);
     delayTimeDryWetAttachment = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(valueTreeState, DelayPluginAudioProcessor::DelayTimeDryWetID, *delayDryWetSlider);
 
+    addAndMakeVisible(delayFeedBackSlider);
+    delayFeedBackAttachment = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(valueTreeState, DelayPluginAudioProcessor::DelayFeedBackID, *delayFeedBackSlider);
     // Make sure we call setSize at the end of our constructor to ensure all the components
     // that we use in resized() have actually been created/constructed.
     setResizable(true, true);

@@ -29,7 +29,8 @@ DelayPluginAudioProcessor::DelayPluginAudioProcessor()
     , parameters(*this, nullptr, "PARAMETERS",
       {
         std::make_unique<AudioParameterInt>(DelayTimeParamID, "delayTime", 0, 1000, 500),
-        std::make_unique<AudioParameterFloat>(DelayTimeDryWetID, "delayDryWet", 0.0, 1.0, 0.2)
+        std::make_unique<AudioParameterFloat>(DelayTimeDryWetID, "delayDryWet", 0.0, 1.0, 0.2),
+        std::make_unique<AudioParameterFloat>(DelayFeedBackID, "delayFeedBack", 0.0, 1.0, 0.2)
       })
 {
 
@@ -230,16 +231,18 @@ void DelayPluginAudioProcessor::getFromDelayBuffer (AudioBuffer<float>& buffer, 
 
 void DelayPluginAudioProcessor::feedbackDelay (int channel, const int bufferLength, const int delayBufferLength, float* dryBuffer)
 {
+    const float feedBack = *parameters.getRawParameterValue(DelayFeedBackID);
+
     if (delayBufferLength > bufferLength + mWritePosition)
     {
-        mDelayBuffer.addFromWithRamp(channel, mWritePosition, dryBuffer, bufferLength, 0.1, 0.1);
+        mDelayBuffer.addFromWithRamp(channel, mWritePosition, dryBuffer, bufferLength, feedBack, feedBack);
     }
     else
     {
         const int bufferRemaining = delayBufferLength - mWritePosition;
 
-        mDelayBuffer.addFromWithRamp(channel, bufferRemaining, dryBuffer, bufferRemaining, 0.1, 0.1);
-        mDelayBuffer.addFromWithRamp(channel, 0, dryBuffer, bufferLength - bufferRemaining, 0.1, 0.1);
+        mDelayBuffer.addFromWithRamp(channel, bufferRemaining, dryBuffer, bufferRemaining, feedBack, feedBack);
+        mDelayBuffer.addFromWithRamp(channel, 0, dryBuffer, bufferLength - bufferRemaining, feedBack, feedBack);
     }
 }
         
