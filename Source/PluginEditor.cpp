@@ -78,11 +78,12 @@ DelayPluginAudioProcessorEditor::~DelayPluginAudioProcessorEditor()
 void DelayPluginAudioProcessorEditor::paint (Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    //Image background = ImageCache::getFromMemory (BinaryData::BackgroundImage1_png, BinaryData::BackgroundImage1_pngSize);
+    Image background = ImageCache::getFromMemory (BinaryData::BackgroundImage1_png, BinaryData::BackgroundImage1_pngSize);
     //g.drawImageAt (background, 0, 0);
 
-    Image background = ImageCache::getFromMemory (BinaryData::BackgroundImage2_png, BinaryData::BackgroundImage2_pngSize);
-    g.drawImageAt (background, 0, 0);
+   //Image background = ImageCache::getFromMemory (BinaryData::BackgroundImage2_png, BinaryData::BackgroundImage2_pngSize);
+    //g.drawImageAt (background, 0, 0);
+    g.drawImageWithin(background, 0, 0, getWidth(), getHeight(), juce::RectanglePlacement::stretchToFit);
 
     //g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
 }

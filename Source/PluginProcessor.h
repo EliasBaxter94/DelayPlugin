@@ -82,9 +82,9 @@ private:
 
 
     //TODO: Remove?
-    std::atomic<int>* delayTimeParameter  = nullptr;
-    std::atomic<float>* delayTimeDryWetParameter = nullptr;
-    std::atomic<float>* delayFeedBackParameter = nullptr;
+    //std::atomic<int>* delayTimeParameter  = nullptr;
+    //std::atomic<float>* delayTimeDryWetParameter = nullptr;
+    //std::atomic<float>* delayFeedBackParameter = nullptr;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DelayPluginAudioProcessor)
 };
