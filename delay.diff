@@ -1,0 +1,35 @@
+diff --git a/Source/PluginProcessor.cpp b/Source/PluginProcessor.cpp
+index 9ff4148..037f90a 100644
+--- a/Source/PluginProcessor.cpp
++++ b/Source/PluginProcessor.cpp
+@@ -26,13 +26,25 @@ DelayPluginAudioProcessor::DelayPluginAudioProcessor()
+ 
+ 
+     #endif
+-    , parameters(*this, nullptr, "PARAMETERS",
+-      {
+-        std::make_unique<AudioParameterInt>(DelayTimeParamID, "delayTime", 0, 1000, 500),
+-        std::make_unique<AudioParameterFloat>(DelayTimeDryWetID, "delayDryWet", 0.0, 1.0, 0.2)
+-      })
++    , parameters(  *this
++                  , nullptr
++                  , "PARAMETERS"
++                  , AudioProcessorValueTreeState::ParameterLayout(  std::make_unique<AudioParameterInt>(DelayTimeParamID, "delayTime", 0, 1000, 500)
++                                                                  , std::make_unique<AudioParameterFloat>(DelayTimeDryWetID, "delayDryWet", 0.0, 1.0, 0.2)
++                                                                  , std::make_unique<AudioParameterFloat>("SteppedParam", "steppedParam", NormalisableRange<float>(0.0, 1.0), 0.0)))
+ {
++    // Imagine host tempo has changed
++    RangedAudioParameter *param = parameters.getParameter("SteppedParam");
+ 
++    if (auto *floatParam = dynamic_cast<AudioParameterFloat*>(param))
++    {
++        const auto rangeStart = 0.0f;
++        const auto rangeEnd   = 1.0f;
++
++        const auto interval   = 1.0f / 4;
++
++        floatParam->range = NormalisableRange<float>(rangeStart, rangeEnd, interval);
++    }
+ }
+ 
+ DelayPluginAudioProcessor::~DelayPluginAudioProcessor()
