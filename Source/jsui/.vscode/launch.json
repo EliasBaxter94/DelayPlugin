@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug JSUI",
+            "type": "duk",
+            "request": "attach",
+            "address": "localhost",
+            "port": 9091,
+            "localRoot": "${workspaceFolder}",
+            "sourceMaps": true,
+            "outDir": "${workspaceFolder}/build/js",
+            "stopOnEntry": false,
+            "debugLog": false
+        }
+    ]
+}

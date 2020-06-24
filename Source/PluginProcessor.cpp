@@ -9,7 +9,6 @@
 */
 
 #include "PluginProcessor.h"
-#include "PluginEditor.h"
 
 //==============================================================================
 
@@ -252,7 +251,21 @@ bool DelayPluginAudioProcessor::hasEditor() const
 
 AudioProcessorEditor* DelayPluginAudioProcessor::createEditor()
 {
-    return new DelayPluginAudioProcessorEditor (*this, parameters);
+    File sourceDir = File(__FILE__).getParentDirectory();
+    File bundleFile = sourceDir.getChildFile("jsui/build/js/main.js");
+    
+    auto *editor = new blueprint::BlueprintGenericEditor(this, bundleFile, &parameters);
+    
+    editor->setResizable(true, true);
+    
+    const int startingWidth  = 800;
+    const int startingHeight = 400;
+    
+    editor->setResizeLimits(startingWidth, startingHeight, startingWidth * 2, startingHeight * 2);
+    editor->getConstrainer()->setFixedAspectRatio(startingWidth / startingHeight);
+    editor->setSize (startingWidth, startingHeight);
+    
+    return editor;
 }
 
 //==============================================================================
