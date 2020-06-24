@@ -11,7 +11,7 @@ class App extends Component {
       <View {...styles.container}>
         <View {...styles.content}>
           <Text {...styles.text}>
-            Hello from React.js!
+            Now Elias needs to add some things.
           </Text>
         </View>
       </View>
