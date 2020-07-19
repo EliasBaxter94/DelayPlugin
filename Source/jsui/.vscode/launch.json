@@ -11,7 +11,7 @@
             "sourceMaps": true,
             "outDir": "${workspaceFolder}/build/js",
             "stopOnEntry": false,
-            "debugLog": true
+            "debugLog": false
         }
     ]
 }
