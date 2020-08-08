@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, Text } from 'juce-blueprint';
+import { View } from 'juce-blueprint';
 
 
 class Button extends Component {

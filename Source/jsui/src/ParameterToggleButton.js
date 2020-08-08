@@ -44,10 +44,10 @@ class ParameterToggleButton extends Component {
   }
 
   _onMouseUp(mouseX, mouseY) {
-    const newValue = !this.state.toggle;
+    const newValue = !this.state.toggle
 
     if (typeof this.props.paramId === 'string' && this.props.paramId.length > 0) {
-      NativeMethods.setParameterValueNotifyingHost(this.props.paramId, newValue);
+      global.setParameterValueNotifyingHost(this.props.paramId, newValue);
     }
   }
 

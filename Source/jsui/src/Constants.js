@@ -1,0 +1,7 @@
+export const Colors = {
+  BACKGROUND: 'ff17191f',
+  STROKE: 'ff626262',
+  TRANSPARENT: '00000000',
+  HIGHLIGHT: 'ff66FDCF',
+  SOFT_HIGHLIGHT: '7766FDCF'
+};
